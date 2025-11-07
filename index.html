@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chotto Matte 🍵</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --matcha:#2e7d32;
+      --matcha-light:#e8f5e9;
+      --accent:#20c064;
+    }
+    body { background:#f0fbf3; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    .card-shadow { box-shadow: 0 10px 30px rgba(2,40,12,0.06); }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-accent { background:#7bd84d; color:#083b1f; }
+    .modal-bg { background: rgba(0,0,0,0.45); }
+    .nav-btn { transition: transform 0.18s ease, color 0.18s ease; color: #155e3b; font-weight:600; }
+    .nav-btn:hover { transform: scale(1.1); color: var(--matcha); }
+    .toast { position: fixed; right: 20px; bottom: 20px; z-index: 60; }
+    /* responsive cart width */
+    @media (max-width:640px){
+      #cartDrawer { width: calc(100% - 24px) !important; left:12px; right:12px; }
+    }
+  </style>
+</head>
+<body class="text-green-900">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 right-0 bg-green-100/80 backdrop-blur p-3 z-40">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <nav class="flex gap-4 text-green-800">
+          <button class="nav-btn" onclick="showPage('home')">Trang chủ</button>
+          <button class="nav-btn" onclick="showPage('menu')">Menu</button>
+          <button class="nav-btn" onclick="showPage('contact')">Liên hệ</button>
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <!-- Gear (Editor) -->
+        <button id="btnEditor" title="Chỉnh sửa hình ảnh" class="p-2 rounded-full hover:bg-green-200" onclick="toggleEditor()">
+          <!-- gear icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0a1.724 1.724 0 002.03 1.199c.95-.24 1.86.588 1.62 1.538a1.724 1.724 0 001.2 2.03c.921.3.921 1.603 0 1.902a1.724 1.724 0 00-1.199 2.03c.24.95-.588 1.86-1.538 1.62a1.724 1.724 0 00-2.03 1.2c-.3.921-1.603.921-1.902 0a1.724 1.724 0 00-2.03-1.199c-.95.24-1.86-.588-1.62-1.538a1.724 1.724 0 00-1.2-2.03c-.921-.3-.921-1.603 0-1.902a1.724 1.724 0 001.199-2.03c-.24-.95.588-1.86 1.538-1.62.735.186 1.578-.078 1.9-.964z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </button>
+
+        <!-- Cart icon -->
+        <div class="relative">
+          <button onclick="toggleCart()" title="Xem giỏ hàng" class="p-2 rounded-full hover:bg-green-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 7h14l-2-7M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"/>
+            </svg>
+          </button>
+          <div id="cartBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center invisible">0</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="pt-24 max-w-5xl mx-auto px-4 pb-20">
+
+    <!-- HOME -->
+    <section id="home" class="text-center py-12">
+      <div class="mx-auto w-full md:w-3/4 lg:w-2/3">
+        <div class="bg-green-50 rounded-2xl p-10 card-shadow">
+          <img id="siteLogo" src="https://placehold.co/140x140/ffffff/1e6c38?text=Logo" alt="logo" class="mx-auto w-36 h-36 rounded-full shadow-lg mb-6 object-cover">
+          <h1 class="text-5xl font-extrabold text-green-800 tracking-wide">CHOTTO<br/>MATTE</h1>
+        </div>
+
+        <p class="mt-8 text-gray-600 italic">“Matcha thơm mát nội khu – Đồ uống nhà làm tươi mỗi ngày”</p>
+
+        <div class="mt-8 flex flex-col items-center gap-4">
+          <button onclick="showPage('menu')" class="w-64 btn-primary rounded-xl py-3 font-bold shadow">Xem Menu 🍵</button>
+          <button onclick="showPage('contact')" class="w-64 btn-accent rounded-xl py-3 font-bold shadow">Liên hệ 📞</button>
+          <button onclick="showPage('about')" class="w-64 bg-white rounded-xl py-3 font-bold shadow">Về chúng tôi 🌸</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="hidden py-8">
+      <h2 class="text-3xl font-bold text-center text-green-800 mb-6">Menu & Đặt Món</h2>
+
+      <!-- Combo -->
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex items-center gap-4">
+        <img id="combo_img" src="https://placehold.co/140x100/fff1c1/3b3b00?text=Combo" class="w-32 h-24 object-cover rounded-md" alt="combo">
+        <div class="flex-1 pl-2">
+          <div class="font-bold text-lg text-amber-800">Combo Đặc Biệt (Bánh Tráng + Xoài Lắc + Matcha Latte)</div>
+          <div class="text-red-500 font-bold mt-1">60.000₫</div>
+          <div class="mt-4">
+            <button class="bg-amber-500 hover:bg-amber-600 text-white rounded-xl py-2 px-4" onclick="openItemModal('combo')">Thêm vào Giỏ (Combo)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- List -->
+      <div id="menuList" class="space-y-5"></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="hidden py-8">
+      <h2 class="text-3xl font-bold text-center text-green-800 mb-6">Liên hệ với Chotto Matte</h2>
+
+      <div class="grid gap-6 max-w-3xl mx-auto">
+        <div class="bg-white rounded-xl p-6 text-center shadow">
+          <div class="text-4xl text-green-600 mb-2">📱</div>
+          <h3 class="font-bold text-lg">Zalo / Hotline</h3>
+          <div class="text-2xl font-extrabold text-green-700 mt-2">0372920083</div>
+          <a class="inline-block mt-4 bg-green-500 text-white py-2 px-6 rounded-full" href="https://zalo.me/0372920083" target="_blank">Nhắn Zalo Nhanh</a>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 text-center shadow">
+          <div class="text-4xl mb-2">📄</div>
+          <h3 class="font-bold text-lg">Google Form</h3>
+          <p class="text-sm text-gray-500">Điền form đặt hàng hoặc góp ý</p>
+          <a class="inline-block mt-4 bg-blue-500 text-white py-2 px-6 rounded-full" href="#" target="_blank">Mở Form</a>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 text-center shadow">
+          <div class="text-4xl mb-2">📘</div>
+          <h3 class="font-bold text-lg">Facebook Page</h3>
+          <p class="text-sm text-gray-500">Theo dõi Fanpage để cập nhật</p>
+          <a class="inline-block mt-4 bg-blue-700 text-white py-2 px-6 rounded-full" href="#" target="_blank">Xem Fanpage</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT (simple placeholder) -->
+    <section id="about" class="hidden py-8 text-center">
+      <h2 class="text-3xl font-bold text-green-800 mb-4">Về Chotto Matte</h2>
+      <p class="max-w-2xl mx-auto text-gray-700">Chotto Matte chuyên các đồ uống matcha thủ công, phục vụ nội khu, tươi mỗi ngày.</p>
+    </section>
+
+  </main>
+
+  <!-- CART DRAWER -->
+  <aside id="cartDrawer" class="fixed right-4 top-16 bg-white rounded-2xl p-4 card-shadow hidden z-50" style="width:380px;">
+    <div class="flex items-center justify-between">
+      <h3 class="font-bold text-lg">Giỏ hàng</h3>
+      <button onclick="toggleCart()" class="text-gray-500">Đóng</button>
+    </div>
+    <div id="cartItems" class="mt-3 max-h-72 overflow-auto"></div>
+    <div class="mt-3 border-t pt-3">
+      <div class="flex justify-between items-center">
+        <div class="font-semibold">Tổng</div>
+        <div id="cartTotal" class="font-bold text-green-700">0₫</div>
+      </div>
+      <div class="mt-3">
+        <button onclick="checkout()" class="w-full bg-green-600 text-white py-2 rounded-xl">Thanh toán</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ITEM OPTIONS MODAL -->
+  <div id="itemModalBg" class="fixed inset-0 hidden items-center justify-center z-50 modal-bg">
+    <div class="bg-white rounded-2xl w-11/12 sm:w-3/4 md:w-1/2 p-6 card-shadow">
+      <div class="flex justify-between items-start">
+        <h3 id="modalTitle" class="text-2xl font-bold text-green-800"></h3>
+        <button onclick="closeItemModal()" class="text-gray-500">✕</button>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <img id="modalImg" src="https://placehold.co/400x300" alt="" class="w-full rounded-lg object-cover" />
+        <div>
+          <div class="mb-4">
+            <div class="font-semibold">1. Độ ngọt:</div>
+            <div class="mt-2 flex gap-2">
+              <button class="option-sugar btn-sugar px-4 py-3 rounded-xl border" data-val="Có đường">Có đường</button>
+              <button class="option-sugar btn-sugar px-4 py-3 rounded-xl border" data-val="Ít đường">Ít đường</button>
+              <button class="option-sugar btn-sugar px-4 py-3 rounded-xl border" data-val="Không đường">Không đường</button>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div class="font-semibold">2. Topping:</div>
+            <div class="mt-2 grid grid-cols-1 gap-2">
+              <label class="flex gap-3 items-center p-2 border rounded-xl">
+                <input type="radio" name="topping" value="Không topping" checked />
+                <span>Không topping</span>
+              </label>
+              <label class="flex gap-3 items-center p-2 border rounded-xl">
+                <input type="radio" name="topping" value="Hạt chia (+3.000đ)" />
+                <span>Hạt chia (+3.000đ)</span>
+              </label>
+              <label class="flex gap-3 items-center p-2 border rounded-xl">
+                <input type="radio" name="topping" value="Yến mạch (+3.000đ)" />
+                <span>Yến mạch (+3.000đ)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <div class="text-lg">Giá: <span id="modalPrice" class="font-bold text-green-700">0₫</span></div>
+            <button id="addToCartBtn" class="w-full mt-4 btn-primary py-3 rounded-xl font-bold shadow">Thêm vào Giỏ hàng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDITOR SLIDE -->
+  <div id="editorPanel" class="fixed left-4 top-20 w-80 bg-white rounded-xl p-4 card-shadow hidden z-50">
+    <h4 class="font-bold mb-3">Cài đặt hình ảnh</h4>
+    <div class="text-sm mb-2">Logo</div>
+    <input type="file" accept="image/*" id="logoFile" />
+    <hr class="my-3" />
+    <div class="text-sm mb-2">Thay ảnh món / Combo</div>
+    <select id="selectDish" class="w-full mb-2 border rounded p-1"></select>
+    <input type="file" id="dishFile" accept="image/*" />
+    <div class="mt-3 text-xs text-gray-500">Lưu ý: Ảnh được cập nhật vĩnh viễn trong trình duyệt (localStorage).</div>
+    <div class="mt-3 flex gap-2">
+      <button onclick="saveEditor()" class="bg-green-600 text-white px-3 py-1 rounded">Lưu</button>
+      <button onclick="toggleEditor()" class="px-3 py-1 rounded border">Đóng</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden">
+    <div class="bg-green-600 text-white px-4 py-2 rounded shadow">Đã thêm vào giỏ hàng</div>
+  </div>
+
+<script>
+/* ---------------------------
+  Data: menu items (id, name, price, img)
+--------------------------- */
+const menuItems = [
+  { id:'matcha_latte', name:'Matcha Latte Truyền Thống', price:22000, img:'https://placehold.co/300x220/d9f7d9/1e6c38?text=Matcha+Latte' },
+  { id:'matcha_sua_tuoi', name:'Matcha Sữa Tươi Ngọt Nhẹ', price:20000, img:'https://placehold.co/300x220/d9f7d9/1e6c38?text=Matcha+Sua+Tuoi' },
+  { id:'matcha_socola', name:'Matcha Socola', price:23000, img:'https://placehold.co/300x220/d9f7d9/1e6c38?text=Matcha+Choco' },
+  { id:'matcha_vani', name:'Matcha Vani', price:23000, img:'https://placehold.co/300x220/d9f7d9/1e6c38?text=Matcha+Vani' },
+  { id:'matcha_yen_mach', name:'Matcha Yến Mạch Mật Ong', price:23000, img:'https://placehold.co/300x220/d9f7d9/1e6c38?text=Matcha+YenMach' },
+  { id:'matcha_sua_hat', name:'Matcha Sữa Hạt (Hạnh nhân/Óc chó)', price:23000, img:'https://placehold.co/300x220/d9f7d9/1e6c38?text=Matcha+Sua+Hat' },
+  { id:'banh_trang', name:'Bánh Tráng Trộn', price:20000, img:'https://placehold.co/300x220/f9e0b5/6b3b00?text=Banh+Trang' },
+  { id:'xoai_lac', name:'Xoài Lắc', price:20000, img:'https://placehold.co/300x220/fbeec1/61481c?text=Xoai+Lac' },
+  { id:'combo', name:'Combo Đặc Biệt (Bánh Tráng + Xoài Lắc + Matcha Latte)', price:60000, img:'https://placehold.co/300x200/fff1c1/3b3b00?text=Combo' },
+];
+
+/* ---------------------------
+  Cart stored in localStorage
+--------------------------- */
+let cart = JSON.parse(localStorage.getItem('chotto_cart') || '[]');
+
+/* render menu list */
+function renderMenu(){
+  const container = document.getElementById('menuList');
+  container.innerHTML = menuItems
+    .filter(it => it.id !== 'combo') // combo handled separately top
+    .map(it => `
+    <div class="bg-white rounded-xl p-3 flex items-center gap-4 card-shadow">
+      <img src="${it.img}" alt="${it.name}" class="w-28 h-20 object-cover rounded-md">
+      <div class="flex-1">
+        <div class="font-bold text-green-800">${it.name}</div>
+        <div class="text-red-500 font-bold mt-1">${formatVND(it.price)}đ</div>
+      </div>
+      <div>
+        <button class="bg-green-400 text-white px-4 py-2 rounded-xl" onclick="openItemModal('${it.id}')">Đặt hàng ngay</button>
+      </div>
+    </div>
+  `).join('');
+
+  // fill select dish in editor
+  const sel = document.getElementById('selectDish');
+  sel.innerHTML = menuItems.map(i => `<option value="${i.id}">${i.name}</option>`).join('');
+}
+
+/* page navigation */
+function showPage(id){
+  ['home','menu','contact','about'].forEach(p => document.getElementById(p).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  if(id==='menu') renderMenu();
+}
+
+/* modal logic */
+let currentItem = null;
+function openItemModal(itemId){
+  const item = menuItems.find(x=>x.id===itemId);
+  currentItem = item;
+  document.getElementById('modalTitle').textContent = item.name;
+  document.getElementById('modalImg').src = item.img;
+  // set base price
+  updateModalPrice(item.price);
+  // default sugar & topping
+  document.querySelectorAll('.option-sugar').forEach(btn=>btn.classList.remove('bg-green-100'));
+  document.querySelectorAll('.option-sugar')[0].classList.add('bg-green-100');
+  document.querySelectorAll('input[name="topping"]').forEach(r=>r.checked = r.value.includes('Không'));
+  document.getElementById('itemModalBg').classList.remove('hidden');
+
+  // if combo, hide sugar/topping? we keep but disable sugar selection visually
+  if(itemId === 'combo'){
+    // for combo we set sugar/topping not applicable
+    document.querySelectorAll('.option-sugar').forEach(b=> b.disabled = true );
+    document.querySelectorAll('input[name="topping"]').forEach(r=> r.disabled = true );
+  } else {
+    document.querySelectorAll('.option-sugar').forEach(b=> b.disabled = false );
+    document.querySelectorAll('input[name="topping"]').forEach(r=> r.disabled = false );
+  }
+}
+
+function closeItemModal(){
+  document.getElementById('itemModalBg').classList.add('hidden');
+}
+
+/* sugar option buttons */
+document.addEventListener('click', (e)=>{
+  if(e.target.classList && e.target.classList.contains('option-sugar') && !e.target.disabled){
+    document.querySelectorAll('.option-sugar').forEach(b=>b.classList.remove('bg-green-100'));
+    e.target.classList.add('bg-green-100');
+  }
+});
+
+/* update modal price when topping changes */
+function updateModalPrice(base){
+  const top = document.querySelector('input[name="topping"]:checked');
+  const toppingAdd = top && top.value.includes('+') ? 3000 : 0;
+  document.getElementById('modalPrice').textContent = formatVND(base + toppingAdd) + '₫';
+  document.getElementById('addToCartBtn').dataset.price = base + toppingAdd;
+}
+
+/* react to topping changes */
+document.addEventListener('change', (e)=>{
+  if(e.target.name === 'topping'){
+    if(currentItem) updateModalPrice(currentItem.price);
+  }
+});
+
+/* add to cart */
+document.getElementById('addToCartBtn').addEventListener('click', ()=>{
+  if(!currentItem) return;
+  // if combo, sugar/topping not applicable
+  const sugar = currentItem.id === 'combo' ? 'Không áp dụng' : (document.querySelector('.option-sugar.bg-green-100')?.dataset?.val || 'Có đường');
+  const topping = currentItem.id === 'combo' ? 'Không' : (document.querySelector('input[name="topping"]:checked')?.value || 'Không topping');
+  const price = parseInt(document.getElementById('addToCartBtn').dataset.price || currentItem.price);
+  // item object
+  const cartItem = {
+    id: currentItem.id + '_' + Date.now(),
+    baseId: currentItem.id,
+    name: currentItem.name,
+    sugar, topping, price, qty: 1, img: currentItem.img
+  };
+  cart.push(cartItem);
+  saveCart();
+  showToast('Đã thêm vào giỏ hàng');
+  closeItemModal();
+  renderCart();
+});
+
+/* quick combo (open combo modal too) */
+function openQuickCombo(){
+  openItemModal('combo');
+}
+
+/* render cart */
+function renderCart(){
+  const container = document.getElementById('cartItems');
+  container.innerHTML = '';
+  if(cart.length===0){
+    container.innerHTML = '<div class="text-sm text-gray-500">Chưa có sản phẩm nào.</div>';
+  } else {
+    cart.forEach((ci, idx)=>{
+      const el = document.createElement('div');
+      el.className = 'flex items-center gap-3 border-b py-3';
+      el.innerHTML = `
+        <img src="${ci.img}" class="w-16 h-12 object-cover rounded">
+        <div class="flex-1">
+          <div class="font-semibold text-sm">${ci.name}</div>
+          <div class="text-xs text-gray-600">Độ ngọt: ${ci.sugar} • ${ci.topping}</div>
+          <div class="text-sm text-red-500 font-bold mt-1">${formatVND(ci.price)}₫</div>
+        </div>
+        <div class="flex flex-col items-end gap-2">
+          <div class="flex gap-1 items-center">
+            <button onclick="changeQty(${idx}, -1)" class="px-2 py-1 border rounded">-</button>
+            <div>${ci.qty}</div>
+            <button onclick="changeQty(${idx}, 1)" class="px-2 py-1 border rounded">+</button>
+          </div>
+          <button onclick="removeCart(${idx})" class="text-xs text-gray-500">Xóa</button>
+        </div>
+      `;
+      container.appendChild(el);
+    });
+  }
+  // total
+  const total = cart.reduce((s,i)=> s + i.price*i.qty, 0);
+  document.getElementById('cartTotal').textContent = formatVND(total) + '₫';
+  updateBadge();
+}
+
+/* change qty */
+function changeQty(idx, delta){
+  cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+  saveCart();
+  renderCart();
+}
+
+/* remove */
+function removeCart(idx){
+  cart.splice(idx,1);
+  saveCart();
+  renderCart();
+}
+
+/* toggle cart drawer */
+function toggleCart(){
+  const d = document.getElementById('cartDrawer');
+  d.classList.toggle('hidden');
+  renderCart();
+}
+
+/* save cart to localStorage */
+function saveCart(){
+  localStorage.setItem('chotto_cart', JSON.stringify(cart));
+}
+
+/* format currency */
+function formatVND(n){
+  if (typeof n !== 'number') n = Number(n) || 0;
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+/* badge */
+function updateBadge(){
+  const badge = document.getElementById('cartBadge');
+  const qty = cart.reduce((s,i)=> s + i.qty, 0);
+  if(qty>0){
+    badge.classList.remove('invisible');
+    badge.textContent = qty;
+  } else {
+    badge.classList.add('invisible');
+  }
+}
+
+/* checkout (demo) */
+function checkout(){
+  if(cart.length===0){ alert('Giỏ hàng rỗng'); return; }
+  // For demo we just show an alert and clear cart
+  alert('Thanh toán demo — tổng: ' + document.getElementById('cartTotal').textContent);
+  cart = [];
+  saveCart();
+  renderCart();
+  toggleCart();
+}
+
+/* toast */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.querySelector('div').textContent = msg;
+  t.classList.remove('hidden');
+  setTimeout(()=> t.classList.add('hidden'), 1600);
+}
+
+/* Editor panel */
+function toggleEditor(){
+  document.getElementById('editorPanel').classList.toggle('hidden');
+}
+
+/* change logo from editor */
+document.getElementById('logoFile').addEventListener('change', (e)=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    document.getElementById('siteLogo').src = ev.target.result;
+    document.getElementById('siteLogo').classList.add('shadow-lg');
+    localStorage.setItem('chotto_logo', ev.target.result);
+  };
+  r.readAsDataURL(f);
+});
+
+/* change dish image from editor */
+document.getElementById('dishFile').addEventListener('change', (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  const dishId = document.getElementById('selectDish').value;
+  const r = new FileReader();
+  r.onload = ev => {
+    // update menuItems image
+    const it = menuItems.find(x=>x.id===dishId);
+    if(it){ it.img = ev.target.result; renderMenu(); localStorage.setItem('chotto_menu_images', JSON.stringify(menuItems.map(i=>({id:i.id,img:i.img})))); }
+    // if combo update combo image element
+    if(dishId === 'combo'){
+      const comboImg = document.getElementById('combo_img');
+      if(comboImg) comboImg.src = ev.target.result;
+    }
+  };
+  r.readAsDataURL(f);
+});
+
+/* save editor (also persist) */
+function saveEditor(){
+  alert('Đã lưu thay đổi hình trong trình duyệt.');
+  toggleEditor();
+}
+
+/* load persisted images if any */
+(function init(){
+  // load logo if saved
+  const lg = localStorage.getItem('chotto_logo');
+  if(lg) document.getElementById('siteLogo').src = lg;
+  // load menu images
+  const mi = JSON.parse(localStorage.getItem('chotto_menu_images') || 'null');
+  if(mi){
+    mi.forEach(x=>{
+      const it = menuItems.find(m=>m.id===x.id);
+      if(it) it.img = x.img;
+      if(x.id === 'combo') {
+        const comboImg = document.getElementById('combo_img');
+        if(comboImg) comboImg.src = x.img;
+      }
+    });
+  }
+  // initial render
+  renderMenu();
+  renderCart();
+  showPage('home');
+})();
+
+</script>
+</body>
+</html>
