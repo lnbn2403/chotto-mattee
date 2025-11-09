@@ -11,20 +11,7 @@
       --matcha-light:#e8f5e9;
       --accent:#20c064;
     }
-    body <!-- 🌸 Bộ sưu tập ảnh -->
-<div style="text-align:center; margin-top: 30px;">
-  <h2>Bộ sưu tập hình ảnh 🌿</h2>
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 15px;">
-    
-    <img src="IMG_3791.jpeg" alt="ảnh 1" width="250">
-    <img src="IMG_3792.jpeg" alt="ảnh 2" width="250">
-    <img src="IMG_3793.jpeg" alt="ảnh 3" width="250">
-    <img src="IMG_3794.jpeg" alt="ảnh 4" width="250">
-    <img src="IMG_3795.jpeg" alt="ảnh 5" width="250">
-    <img src="IMG_3796.jpeg" alt="ảnh 6" width="250">
-    <img src="IMG_3797.jpeg" alt="ảnh 7" width="250">
-
-  </div>
+    body 
 </div>
 {background:#f0fbf3; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
     .card-shadow { box-shadow: 0 10px 30px rgba(2,40,12,0.06); }
@@ -150,8 +137,52 @@
     <!-- ABOUT (simple placeholder) -->
     <section id="about" class="hidden py-8 text-center">
       <h2 class="text-3xl font-bold text-green-800 mb-4">Về Chotto Matte</h2>
-      <p class="max-w-2xl mx-auto text-gray-700">Chotto Matte chuyên các đồ uống matcha thủ công, phục vụ nội khu, tươi mỗi ngày.</p>
-    </section>
+      <p class="max-w-2xl mx-auto text-gray-700">Chotto Matte chuyên các đồ uống matcha thủ công, phục vụ nội khu, tươi mỗi ngày.</p> 
+      <h1 class="text-4xl font-bold text-green-800">Chotto Matte 🍵</h1>
+<p class="mt-2 text-green-700">Matcha tươi – vị Nhật trong từng ngụm</p>
+
+<!-- 🌸 Bộ sưu tập ảnh (đã thêm đủ 9 hình) -->
+<style>
+  .gallery { text-align:center; margin-top:30px; }
+  .gallery-grid { 
+    display:flex; 
+    flex-wrap:wrap; 
+    justify-content:center; 
+    gap:10px; 
+    margin-top:15px; 
+  }
+  .gallery-item { 
+    width:250px; 
+    height:170px; 
+    overflow:hidden; 
+    border-radius:8px; 
+    box-shadow:0 6px 18px rgba(2,40,12,0.06); 
+    transition:transform .18s ease; 
+  }
+  .gallery-item img { 
+    width:100%; 
+    height:100%; 
+    object-fit:cover; 
+    display:block; 
+  }
+  .gallery-item:hover { transform:scale(1.04); }
+</style>
+
+<div class="gallery">
+  <h2 class="text-xl font-semibold text-green-800">Bộ sưu tập hình ảnh 🌿</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="IMG_3791.jpeg" alt=""></div>
+    <div class="gallery-item"><img src="IMG_3792.jpeg" alt=""></div>
+    <div class="gallery-item"><img src="IMG_3793.jpeg" alt=""></div>
+    <div class="gallery-item"><img src="IMG_3794.jpeg" alt=""></div>
+    <div class="gallery-item"><img src="IMG_3795.jpeg" alt=""></div>
+    <div class="gallery-item"><img src="IMG_3796.jpeg" alt=""></div>
+    <div class="gallery-item"><img src="IMG_3797.jpeg" alt=""></div>
+    <div class="gallery-item"><img src="att.YZDL5BufjetYIPEmio_Xb_IGFD.jpeg" alt=""></div>
+    <div class="gallery-item"><img src="att.hHDew6lp44_L_tJ2OlyE9GIO.jpeg" alt=""></div>
+  </div>
+</div>
+ </section>
 
   </main>
 
@@ -537,3 +568,4 @@ function saveEditor(){
 </script>
 </body>
 </html>
+
